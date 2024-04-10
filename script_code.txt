@@ -1,0 +1,722 @@
+index.html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+
+    <title>Chat Bot</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet" href="static/css/chat.css">
+    <link rel="stylesheet" href="static/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+  
+    <!--chat bar block-->
+    <div class="chat-bar-collapsible">
+        <button id="chat-button" type="button" class="collapsible">ChatBot
+            <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+        </button>
+        <div class="content">
+            <div class="full-chat-block">
+                <!--message container-->
+                <div class="outer-container">
+                    <div class="chat-container">
+                        <!--messages-->
+                        <div id="chatbox">
+                            <h5 id="chat-timestamp"></h5>
+                            <span class="material-symbols-outlined">smart_toy</span>
+                            <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
+                        </div>
+                        <!--user input box-->
+                        <div class="chat-bar-input-block">
+                            <input id="textInput" class="input-box" type="text" name="msg"
+                            placeholder="Tap 'Enter' to send a message">
+                            <p></p>
+                       
+                            <div class="chat-bar-icons">
+                            <i id="chat-icon" style="color: crimson;" class="fa fa-fw fa-heart" onclick="heartButton()"></i>
+                            <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send" onclick="sendButton()"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chat-bar-bottom">
+                        <p></p>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="static/scripts/responses.js"></script>
+<script src="static/scripts/chat.js"></script>
+</html>
+
+
+
+chat.css:
+.chat-bar-collapsible {
+    position: fixed;
+    bottom: 0;
+    right: 50px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.collapsible {
+    background-color: #724ae8;
+    color: oldlace;
+    cursor: pointer;
+    padding: 18px;
+    width: 350px;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    border-radius: 10px 10px 0px 0px;
+    border: 3px solid white;
+    border-bottom: none;
+}
+
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.full-chat-block {
+    width: 350px;
+    background: white;
+    text-align: center;
+    overflow: auto;
+    scrollbar-width: none;
+    height: max-content;
+    transition: max-height 0.2s ease-out;
+}
+
+.outer-container {
+    min-height: 500px;
+    bottom: 0%;
+    position: relative;
+}
+
+.chat-container {
+    max-height: 500px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    scroll-behavior: smooth;
+    hyphens: auto;
+}
+
+.chat-container::-webkit-scrollbar {
+    display: none;
+}
+
+.chat-bar-input-block {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 10px 10px 10px;
+    position: relative; /* Add this line to fix the input text field in position */
+    bottom: 0; /* Add this line to position the input text field at the bottom of the chatbox */
+}
+
+.chat-bar-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 10%;
+    font-size: 22px;
+    margin-top: -10px; /* to move the icons slightly above inline */
+}
+
+
+#chat-icon:hover {
+    opacity: .7;
+}
+
+/* Chat bubbles */
+
+#userInput {
+    width: 75%;
+}
+
+.material-symbols-outlined{
+        height: 32px;
+        width: 32px;
+        background: #724ae8;
+        color: #fff;
+        align-self: flex-end;
+        text-align: center;
+        line-height: 32px;
+        border-radius: 4px;
+        margin: 0 10px 7px 0;
+}
+
+.userText {
+    color: #724ae8;
+    font-family: Helvetica;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: left;
+    clear: both;
+}
+
+.botText {
+    display: flex;
+    align-items: left;
+    color: #000;
+    font-family: Helvetica;
+    font-weight: normal;
+    font-size: 16px;
+    text-align: right;
+}
+
+.botText .material-symbols-outlined {
+    margin-left: 10px;
+    align-self: flex-start;
+    color: #724ae8;
+    background: transparent;
+}
+
+
+.botText .material-symbols-outlined span {
+    margin-left: 10px;
+    align-self: flex-start;
+}
+.input-box {
+    float: left;
+    border: none;
+    box-sizing: border-box;
+    width: 85%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    color: #000;
+    background-color: white;
+    outline: none
+}
+
+.userText {
+    color: white;
+    font-family: Helvetica;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+    clear: both;
+}
+
+.userText span {
+    line-height: 1.5em;
+    display: inline-block;
+    background: #724ae8;
+    padding: 10px;
+    border-radius: 8px;
+    border-bottom-right-radius: 2px;
+    max-width: 80%;
+    margin-right: 10px;
+    animation: floatup .5s forwards
+}
+
+.textInput {
+    position: fixed;
+
+}
+.botText {
+    color: #000;
+    font-family: Helvetica;
+    font-weight: normal;
+    font-size: 16px;
+    text-align: left;
+}
+
+.botText span {
+    line-height: 1.5em;
+    display: inline-block;
+    background: #e0e0e0;
+    padding: 10px;
+    border-radius: 8px;
+    border-bottom-left-radius: 2px;
+    max-width: 80%;
+    margin-left: 10px;
+    animation: floatup .5s forwards
+}
+
+@keyframes floatup {
+    from {
+        transform: translateY(14px);
+        opacity: .0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .full-chat-block {
+        width: 100%;
+        border-radius: 0px;
+    }
+    .chat-bar-collapsible {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+    }
+    .collapsible {
+        width: 100%;
+        border: 0px;
+        border-top: 3px solid white;
+        border-radius: 0px;
+    }
+}
+
+
+responses.js:
+function getBotResponse(input)
+{
+    if (input == "rock"){
+        return "paper";
+    }
+    else if(input =="paper"){
+        return "scissors";
+    }
+    else if(input == "scissors"){
+        return "rock";
+    }
+
+    if (input == "Hello"){
+        return "Hello there";
+    }
+    else if(input == "goodbye"){
+        return "Talk to you later";
+    }
+    else {
+        return "Try asking something else";
+    }
+};
+
+const defaultResponses = [
+    "I'm sorry, I didn't understand that. Can you please rephrase your question?",
+    "I'm not sure how to respond to that. Can you please try again?",
+    "I'm having trouble understanding your question. Can you please clarify?",
+    "I'm not sure what you're asking. Can you please provide more context?",
+    "I'm not able to respond to that. Can you please try a different question?"
+  ];
+  
+  function getBotResponse(userText) {
+    // Check if the user's input matches any of the expected inputs
+    for (let i = 0; i < expectedInputs.length; i++) {
+      if (userText.toLowerCase() === expectedInputs[i].toLowerCase()) {
+        // Return the corresponding response
+        return responses[i];
+      }
+    }
+  
+    // If no response is found, return a random default response
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+  }
+
+  const expectedInputs = [
+    "hello",
+    "hi",
+    "how are you",
+    "what's up",
+    "how can you help me",
+    "need to ask you anything",
+    "can I ask you something"
+  ];
+  
+  const responses = [
+    "Hello! How can I help you today?",
+    "Hi there! What can I do for you?",
+    "I'm doing well, thank you! How about you?",
+    "Not much, just here to help you! How can I assist you today?",
+    "I'm here to help you with any questions or concerns you have! What can I do for you?"
+  ];
+
+
+chat.js:
+// collapseable
+document.addEventListener("DOMContentLoaded", function() {
+    var coll = document.getElementsByClassName("collapsible");
+
+    for (let i = 0; i < coll.length; i++)
+    {
+        coll[i].addEventListener("click",function()
+        {
+            this.classList.toggle("active");
+
+            var content = this.nextElementSibling;
+
+            if(content.style.maxHeight)
+            {
+                content.style.maxHeight = null;
+            } 
+            else
+            {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+        function getTime()
+        {
+            let today = new Date();
+            hours = today.getHours();
+            minutes = today.getMinutes();
+    
+            if (hours < 10)
+            {
+                hours= "0" + hours ; //10:15
+            }
+            if (minutes < 10)
+            {
+                minutes= "0" + minutes ; //10:15
+            }
+    
+            let time = hours + ":" + minutes;
+            return time;
+        }
+
+    
+        function firstBotMessage()
+        {
+            let firstMessage = "Hey there, ask me anything?!"
+            document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+    
+            let time = getTime();
+    
+            $("#chat-timestamp").append(time);
+            document.getElementById("textInput").scrollIntoView(false);
+    
+        } 
+       
+        firstBotMessage();
+
+        //retrieve responses
+        function getHardResponse(userText) {
+            let botResponse = getBotResponse(userText);
+            let botHtml = '<p class="botText"><span class="material-symbols-outlined">smart_toy</span><span>' + botResponse + '</span></p>';            
+            $("#chatbox").append(botHtml);
+        
+            document.getElementById("chat-bar-bottom").scrollIntoView(true);
+            
+            const textInput = document.getElementById("textInput");
+            textInput.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+ 
+
+        function getResponse() {
+            let userText = $("#textInput").val();
+
+            if(userText == ""){
+                userText="heya whats up";
+            }
+
+            let userHtml= '<p class="userText"><span>' + userText + '</span></p>';
+
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document.getElementById("chat-bar-bottom").scrollIntoView(true);
+           
+            setTimeout(() => {
+                getHardResponse(userText);
+                document.getElementById("chat-bar-bottom").scrollIntoView(true);
+            },1000)
+        }
+      
+
+        function buttonSendText(sampleText){
+            let userHtml =  '<p class="botText"><span>' + sampleText + '</span></p>';
+
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document.getElementById("chat-bar-bottom").scrollIntoView(true);
+  
+            const textInput = document.getElementById("textInput");
+            textInput.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+
+        function sendButton(){
+            getResponse();
+        }
+
+        function heartButton(){
+            buttonSendText("liked The Text")
+        }
+
+        //press enter to send the message
+        $("#textInput").keypress(function(e){
+            if(e.which == 13){
+                getResponse();
+            }
+        })
+
+    
+    });
+
+
+
+
+// var coll = document.getElementsByClassName("collapsible");
+
+// for (let i = 0; i < coll.length; i++)
+// {
+//     coll[i].addEventListener("click",function()
+//     {
+//         this.classList.toggle("active");
+
+//         var content = this.nextElementSibling;
+
+//         if(content.style.maxHeight)
+//         {
+//             content.style.maxHeight = null;
+//         } 
+//         else
+//         {
+//             content.style.maxHeight = content.scrollHeight + "px";
+//         }
+//     });
+// }
+
+// function getTime()
+// {
+//     let today = new Date();
+//     hours = today.getHours();
+//     minutes = today.getMinutes();
+
+//     if (hours < 10)
+//     {
+//         hours= "0" + hours ; //10:15
+//     }
+//     if (minutes < 10)
+//     {
+//         minutes= "0" + minutes ; //10:15
+//     }
+
+//     let time = hours + ":" + minutes;
+//     return time;
+// }
+
+// function firstBotMessage()
+// {
+//     let firstMessage = "How's it going?"
+//     document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+
+//     let time = getTime();
+
+//     $("#chat-timestamp").append(time);
+//     document.getElementById("userInput").scrollIntoView(false);
+
+// }
+
+// firstBotMessage();
+
+
+
+
+
+
+// // collapseable
+// document.addEventListener("DOMContentLoaded", function() {
+//     var coll = document.getElementsByClassName("collapsible");
+
+//     for (let i = 0; i < coll.length; i++)
+//     {
+//         coll[i].addEventListener("click",function()
+//         {
+//             this.classList.toggle("active");
+
+//             var content = this.nextElementSibling;
+
+//             if(content.style.maxHeight)
+//             {
+//                 content.style.maxHeight = null;
+//             } 
+//             else
+//             {
+//                 content.style.maxHeight = content.scrollHeight + "px";
+//             }
+//         });
+//     }
+
+//         function getTime()
+//         {
+//             let today = new Date();
+//             hours = today.getHours();
+//             minutes = today.getMinutes();
+    
+//             if (hours < 10)
+//             {
+//                 hours= "0" + hours ; //10:15
+//             }
+//             if (minutes < 10)
+//             {
+//                 minutes= "0" + minutes ; //10:15
+//             }
+    
+//             let time = hours + ":" + minutes;
+//             return time;
+//         }
+            
+//         function firstBotMessage()
+//         {
+//             let firstMessage = "Hey there, ask me anything?!"
+//             document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+    
+//             let time = getTime();
+    
+//             $("#chat-timestamp").append(time);
+//             document.getElementById("userInput").scrollIntoView(false);
+    
+//         } 
+
+//         document.addEventListener("DOMContentLoaded", function() {
+//             firstBotMessage();
+//           });
+    
+//         // firstBotMessage();
+
+//         //retrieve responses
+//         function getHardResponse(userText) {
+//             let botResponse = getBotResponse(userText);
+//             let botHtml = '<p class="botText"><span class="material-symbols-outlined">smart_toy</span><span>' + botResponse + '</span></p>';            $("#chatbox").append(botHtml);
+             
+//             document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+//             // const textInput = document.getElementById("textInput");
+//             // textInput.scrollIntoView({ behavior: "smooth", block: "start" });
+//         }
+
+//         function getResponse() {
+//             let userText = $("#textInput").val();
+
+//             if(userText == ""){
+//                 userText="heya whats up";
+//             }
+
+//             let userHtml= '<p class="userText"><span>' + userText + '</span></p>';
+
+//             $("#textInput").val("");
+//             $("#chatbox").append(userHtml);
+//             document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+//             // const textInput = document.getElementById("textInput");
+//             // textInput.scrollIntoView({ behavior: "smooth", block: "start" });
+
+//             setTimeout(() => {
+//                 getHardResponse(userText);
+//                 document.getElementById("chat-bar-bottom").scrollIntoView(true);
+//             },1000)
+//         }
+      
+
+//         function buttonSendText(sampleText){
+//             let userHtml =  '<p class="botText"><span>' + sampleText + '</span></p>';
+
+//             $("#textInput").val("");
+//             $("#chatbox").append(userHtml);
+//             document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+//         }
+
+//         function sendButton(){
+//             getResponse();
+//         }
+
+//         function heartButton(){
+//             buttonSendText("liked The Text")
+//         }
+
+//         //press enter to send the message
+//         $("#textInput").keypress(function(e){
+//             if(e.which == 13){
+//                 getResponse();
+//             }
+//         })
+
+    
+//     });
+
+
+
+
+
+
+    
+// var coll = document.getElementsByClassName("collapsible");
+
+// for (let i = 0; i < coll.length; i++)
+// {
+//     coll[i].addEventListener("click",function()
+//     {
+//         this.classList.toggle("active");
+
+//         var content = this.nextElementSibling;
+
+//         if(content.style.maxHeight)
+//         {
+//             content.style.maxHeight = null;
+//         } 
+//         else
+//         {
+//             content.style.maxHeight = content.scrollHeight + "px";
+//         }
+//     });
+// }
+
+// function getTime()
+// {
+//     let today = new Date();
+//     hours = today.getHours();
+//     minutes = today.getMinutes();
+
+//     if (hours < 10)
+//     {
+//         hours= "0" + hours ; //10:15
+//     }
+//     if (minutes < 10)
+//     {
+//         minutes= "0" + minutes ; //10:15
+//     }
+
+//     let time = hours + ":" + minutes;
+//     return time;
+// }
+
+// function firstBotMessage()
+// {
+//     let firstMessage = "How's it going?"
+//     document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+
+//     let time = getTime();
+
+//     $("#chat-timestamp").append(time);
+//     document.getElementById("userInput").scrollIntoView(false);
+
+// }
+
+// firstBotMessage();
+
